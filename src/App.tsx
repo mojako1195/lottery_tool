@@ -1,24 +1,18 @@
 import "./App.css";
-import { Center, Button, Grid, GridItem } from "@chakra-ui/react";
+import { Center, Button, Grid, GridItem, Box, Heading } from "@chakra-ui/react";
 
 export const App = () => {
   return (
     <>
+      <Box bg="#0d6efd" w="100%" p={4} color="white">
+        <Heading as="h4" size="md">
+          WEB抽選ツール
+        </Heading>
+      </Box>
       <h1>Hello world</h1>
       <Center>
         <Button>Push me!</Button>
       </Center>
-      <Grid
-        h="200px"
-        templateRows="repeat(2, 1fr)"
-        templateColumns="repeat(5, 1fr)"
-        gap={4}
-      >
-        <GridItem rowSpan={2} colSpan={1} bg="red.500" />
-        <GridItem colSpan={2} bg="red.500" />
-        <GridItem colSpan={2} bg="red.500" />
-        <GridItem colSpan={4} bg="red.500" />
-      </Grid>
     </>
   );
 };
