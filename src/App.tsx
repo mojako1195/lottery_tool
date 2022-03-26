@@ -12,10 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-type ChusenList = {
-  title: string;
-  omomi: number;
-};
+import type { ChusenList } from "./types/chusenList";
 
 export const App = () => {
   const listA: ChusenList = {
