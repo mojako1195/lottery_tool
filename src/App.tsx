@@ -159,7 +159,7 @@ export const App = () => {
                   ml={3}
                   value={text}
                   maxLength={25}
-                  placeholder="入力"
+                  placeholder="入力（最大２５字）"
                   onChange={onChangeText}
                 />
                 <Select
