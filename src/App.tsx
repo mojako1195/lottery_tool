@@ -10,25 +10,29 @@ import {
   Select,
   Text,
 } from "@chakra-ui/react";
-import { useState } from "react";
-
-import type { ChusenList } from "./types/chusenList";
+import { useState, useCallback } from "react";
+import { useChusenList } from "./hooks/useChusenList";
 
 export const App = () => {
-  const listA: ChusenList = {
-    title: "A",
-    omomi: 1,
+  // カスタムフックから取得
+  const { chusens, addChusen, deleteChusen } = useChusenList();
+
+  // 削除ボタン
+  const onClickDelete = useCallback(
+    (index: number) => {
+      deleteChusen(index);
+    },
+    [deleteChusen]
+  );
+
+  // 追加ボタン
+  const onClickAdd = () => {
+    addChusen("", 1);
   };
-  const listB: ChusenList = {
-    title: "AA",
-    omomi: 2,
+
+  const scrollBoxStyles = {
+    overflow: "auto",
   };
-  const listC: ChusenList = {
-    title: "AAA",
-    omomi: 3,
-  };
-  const lists: ChusenList[] = [listA, listB, listC];
-  const [chusenLists, setChusenLists] = useState<ChusenList[]>(lists);
 
   return (
     <>
@@ -47,8 +51,15 @@ export const App = () => {
             <Heading as="h4" size="md">
               抽選対象
             </Heading>
-            <Box p={0} mt={3} w="100%" h="500" border="2px">
-              {chusenLists.map((chusenList) => (
+            <Box
+              p={0}
+              mt={3}
+              w="100%"
+              h="500"
+              border="2px"
+              sx={scrollBoxStyles}
+            >
+              {chusens.map((chusen, index) => (
                 <Center>
                   <Box
                     p={1.5}
@@ -62,8 +73,8 @@ export const App = () => {
                     bg="white"
                   >
                     <Input
-                      variant="unstyled"
-                      placeholder="入力"
+                      variant="flushed"
+                      placeholder={chusen.title}
                       size="sm"
                       w="80%"
                       mt={-1.5}
@@ -75,6 +86,7 @@ export const App = () => {
                       rounded="lg"
                       bg="orange.300"
                       _hover={{ bg: "orange.200" }}
+                      onClick={() => onClickDelete(index)}
                     >
                       ×
                     </Button>
@@ -88,8 +100,14 @@ export const App = () => {
                   </Box>
                 </Center>
               ))}
-              <Center mt={6}>
-                <Button w="25%" h="10" border="2px" borderRadius="md">
+              <Center mt={6} mb={3}>
+                <Button
+                  w="25%"
+                  h="10"
+                  border="2px"
+                  borderRadius="md"
+                  onClick={onClickAdd}
+                >
                   追加
                 </Button>
               </Center>
