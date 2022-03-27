@@ -72,6 +72,14 @@ export const App = () => {
 
   // 抽選ボタン
   const onClickChusen = () => {
+    if (chusens.length == 0) {
+      alert("抽選対象を追加してください。");
+      return;
+    }
+    if (!num) {
+      alert("当選数を選択してください。");
+      return;
+    }
     const textList: string[] = [];
     chusens.map((chusen) => {
       for (let i = 0; i < parseInt(chusen.omomi); i++) {
@@ -203,11 +211,9 @@ export const App = () => {
                     value={num}
                     onChange={onChangeNum}
                   >
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                    <option value={5}>1005</option>
+                    {chusens.map((chusen, index) => (
+                      <option value={index + 1}>{index + 1}</option>
+                    ))}
                   </Select>
                 </GridItem>
               </Grid>
