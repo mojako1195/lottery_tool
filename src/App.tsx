@@ -28,7 +28,6 @@ export const App = () => {
   };
   const onChangetOmomi = (e: ChangeEvent<HTMLSelectElement>) => {
     setOmomi(e.target.value);
-    console.log(e);
   };
 
   // 削除ボタン
@@ -41,7 +40,13 @@ export const App = () => {
 
   // 追加ボタン
   const onClickAdd = () => {
-    addChusen("", "1");
+    if (text.trim() === "") {
+      alert("追加する抽選対象を入力してください。");
+      return;
+    }
+    addChusen(text, omomi);
+    setText("");
+    setOmomi("1");
   };
 
   const scrollBoxStyles = {
@@ -80,10 +85,12 @@ export const App = () => {
                 <Input
                   variant="flushed"
                   size="sm"
-                  w="80%"
+                  w="90%"
                   mt={-1.5}
                   ml={3}
                   value={text}
+                  maxLength={25}
+                  placeholder="入力"
                   onChange={onChangeText}
                 />
                 <Select
@@ -91,6 +98,7 @@ export const App = () => {
                   w="20%"
                   ml={3}
                   mt={2}
+                  value={omomi}
                   onChange={onChangetOmomi}
                 >
                   <option value="1">1倍</option>
@@ -140,7 +148,7 @@ export const App = () => {
                       gap={4}
                     >
                       <GridItem rowSpan={2} colSpan={4}>
-                        <Box mt={1} ml={1} h="70%" border="1px">
+                        <Box mt={1} ml={1} h="70%" fontWeight="bold">
                           {chusen.title}
                         </Box>
                       </GridItem>
