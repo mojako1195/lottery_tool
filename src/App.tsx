@@ -9,13 +9,27 @@ import {
   Input,
   Select,
   Text,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react";
-import { useState, useCallback } from "react";
+import { useState, useCallback, ChangeEvent } from "react";
 import { useChusenList } from "./hooks/useChusenList";
 
 export const App = () => {
   // カスタムフックから取得
   const { chusens, addChusen, deleteChusen } = useChusenList();
+  // 入力値
+  const [text, setText] = useState<string>("");
+  // 重み
+  const [omomi, setOmomi] = useState<string>("1");
+
+  const onChangeText = (e: ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+  };
+  const onChangetOmomi = (e: ChangeEvent<HTMLSelectElement>) => {
+    setOmomi(e.target.value);
+    console.log(e);
+  };
 
   // 削除ボタン
   const onClickDelete = useCallback(
@@ -27,7 +41,7 @@ export const App = () => {
 
   // 追加ボタン
   const onClickAdd = () => {
-    addChusen("", 1);
+    addChusen("", "1");
   };
 
   const scrollBoxStyles = {
@@ -48,9 +62,56 @@ export const App = () => {
           spacing={{ sm: "50px", md: "80px" }}
         >
           <Box>
-            <Heading as="h4" size="md">
-              抽選対象
+            <Heading m={1} as="h4" size="md">
+              １：抽選対象の追加
             </Heading>
+            <Center>
+              <Box
+                p={1.5}
+                mt={3}
+                w="90%"
+                h="20"
+                border="2px"
+                borderColor="blue.300"
+                shadow="md"
+                rounded="md"
+                bg="white"
+              >
+                <Input
+                  variant="flushed"
+                  size="sm"
+                  w="80%"
+                  mt={-1.5}
+                  ml={3}
+                  value={text}
+                  onChange={onChangeText}
+                />
+                <Select
+                  variant="unstyled"
+                  w="20%"
+                  ml={3}
+                  mt={2}
+                  onChange={onChangetOmomi}
+                >
+                  <option value="1">1倍</option>
+                  <option value="2">2倍</option>
+                  <option value="3">3倍</option>
+                  <option value="4">4倍</option>
+                  <option value="5">5倍</option>
+                </Select>
+              </Box>
+            </Center>
+            <Center mt={4} mb={5}>
+              <Button
+                w="25%"
+                h="10"
+                border="2px"
+                borderRadius="md"
+                onClick={onClickAdd}
+              >
+                追加
+              </Button>
+            </Center>
             <Box
               p={0}
               mt={3}
@@ -72,45 +133,38 @@ export const App = () => {
                     rounded="md"
                     bg="white"
                   >
-                    <Input
-                      variant="flushed"
-                      placeholder={chusen.title}
-                      size="sm"
-                      w="80%"
-                      mt={-1.5}
-                      ml={3}
-                    />
-                    <Button
-                      ml={5}
-                      h="7"
-                      rounded="lg"
-                      bg="orange.300"
-                      _hover={{ bg: "orange.200" }}
-                      onClick={() => onClickDelete(index)}
+                    <Grid
+                      h="20"
+                      templateRows="repeat(2, 1fr)"
+                      templateColumns="repeat(5, 1fr)"
+                      gap={4}
                     >
-                      ×
-                    </Button>
-                    <Select variant="unstyled" w="15%" ml={3} mt={2}>
-                      <option value="1">1倍</option>
-                      <option value="2">2倍</option>
-                      <option value="3">3倍</option>
-                      <option value="4">4倍</option>
-                      <option value="5">5倍</option>
-                    </Select>
+                      <GridItem rowSpan={2} colSpan={4}>
+                        <Box mt={1} ml={1} h="70%" border="1px">
+                          {chusen.title}
+                        </Box>
+                      </GridItem>
+                      <GridItem colSpan={1}>
+                        <Button
+                          h="7"
+                          m={1}
+                          rounded="lg"
+                          bg="orange.300"
+                          _hover={{ bg: "orange.200" }}
+                          onClick={() => onClickDelete(index)}
+                        >
+                          ×
+                        </Button>
+                      </GridItem>
+                      <GridItem colSpan={1}>
+                        <Box h="7" ml={1} mt={-3}>
+                          × {chusen.omomi}倍
+                        </Box>
+                      </GridItem>
+                    </Grid>
                   </Box>
                 </Center>
               ))}
-              <Center mt={6} mb={3}>
-                <Button
-                  w="25%"
-                  h="10"
-                  border="2px"
-                  borderRadius="md"
-                  onClick={onClickAdd}
-                >
-                  追加
-                </Button>
-              </Center>
             </Box>
             <Center mt={6}>
               <Button w="25%" h="10" border="2px" borderColor="green.500">

@@ -8,7 +8,7 @@ export const useChusenList = () => {
 
   // リスト追加
   const addChusen = useCallback(
-    (title: string, omomi: number) => {
+    (title: string, omomi: string) => {
       const newChusens = [...chusens];
       const chusen: ChusenList = {
         title: title,
