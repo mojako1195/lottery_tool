@@ -303,7 +303,14 @@ export const App = () => {
             <Heading as="h4" size="md">
               ４：抽選結果
             </Heading>
-            <Box p={0} mt={3} w="100%" h="400" border="2px">
+            <Box
+              p={0}
+              mt={3}
+              w="100%"
+              h="400"
+              border="2px"
+              sx={scrollBoxStyles}
+            >
               {rankList.map((rankText, index) =>
                 rank === "2" ? (
                   <Box>
