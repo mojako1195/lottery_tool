@@ -17,6 +17,9 @@ import {
 } from "@chakra-ui/react";
 import { useState, useCallback, ChangeEvent } from "react";
 import { useChusenList } from "./hooks/useChusenList";
+import GoldMedal from "./images/goldmedal.png";
+import SilverMedal from "../images/shilvermedal.png";
+import BronzeMedal from "../images/bronzmedal.png";
 
 export const App = () => {
   // カスタムフックから取得
@@ -303,21 +306,38 @@ export const App = () => {
             <Heading as="h4" size="md">
               ４：抽選結果
             </Heading>
-            <Box
-              p={0}
-              mt={3}
-              w="100%"
-              h="400"
-              border="2px"
-              sx={scrollBoxStyles}
-            >
+            <Box mt={3} w="100%" h="400" border="2px" sx={scrollBoxStyles}>
               {rankList.map((rankText, index) =>
                 rank === "2" ? (
-                  <Box>
+                  <Box
+                    mt={3}
+                    ml={3}
+                    p={1.5}
+                    w="50%"
+                    h="10"
+                    border="2px"
+                    borderColor="blue.300"
+                    shadow="md"
+                    rounded="md"
+                    bg="white"
+                  >
                     {index + 1}位：{rankText}
                   </Box>
                 ) : (
-                  <Box>{rankText}</Box>
+                  <Box
+                    mt={3}
+                    ml={3}
+                    p={1.5}
+                    w="50%"
+                    h="10"
+                    border="2px"
+                    borderColor="blue.300"
+                    shadow="md"
+                    rounded="md"
+                    bg="white"
+                  >
+                    {rankText}
+                  </Box>
                 )
               )}
             </Box>
