@@ -9,6 +9,11 @@ export const useChusenList = () => {
   // リスト追加
   const addChusen = useCallback(
     (title: string, omomi: string) => {
+      const isTitle = chusens.some((data) => data.title === title);
+      if (isTitle) {
+        alert("すでに抽選対象に含まれています。");
+        return;
+      }
       const newChusens = [...chusens];
       const chusen: ChusenList = {
         title: title,
